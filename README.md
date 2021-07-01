@@ -1,9 +1,5 @@
 *Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
 
-
-    "node-sass": "^5.0.0",
-    "postcss": "^8.2.8",
-    "rollup-plugin-serve": "^1.1.0",
 ---
 
 # svelte app
@@ -26,8 +22,6 @@ Install the dependencies...
 
 ```bash
 cd svelte-app
-npm config set registry http://registry.npmjs.org/
-npm set progress=false 
 npm install
 ```
 
