@@ -8,8 +8,9 @@ import preprocess from 'svelte-preprocess';
 
 const production = !process.env.ROLLUP_WATCH;
 
+
 function serve() {
-	let server;
+	let server = null;
 
 	function toExit() {
 		if (server) server.kill(0);
@@ -17,12 +18,12 @@ function serve() {
 
 	return {
 		writeBundle() {
-			if (server) return;
-			server = require('child_process').spawn('npm', ['run', 'start', '--', '--dev'], {
+			if (server !== null) return;
+			server = require('child_process').spawn('./server.py', {
 				stdio: ['ignore', 'inherit', 'inherit'],
 				shell: true
 			});
-
+    
 			process.on('SIGTERM', toExit);
 			process.on('exit', toExit);
 		}
