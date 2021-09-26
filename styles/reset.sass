@@ -1,35 +1,93 @@
-body, h1, h2, h3, h4, h5, h6, p, button
-  margin: 0px
+html, body, div, span, iframe,
+h1, h2, h3, h4, h5, h6, p,
+a, ol, ul, li,
+fieldset, form, label,
+table, tbody, tfoot, thead, tr, th, td,
+nav
+  margin: 0
+  padding: 0
+  border: 0
+  font-size: 100%
+  font: inherit
+  vertical-align: baseline
+  line-height: $lineheight
 
-h1
-  font-size: 3em
-  font-weight: 900
+*,
+*:before,
+*:after 
+  box-sizing: inherit
 
-h2
-  font-size: 2em
-  font-weight: 900 
+html, body 
+  height: 100%
+  font-family: $font
+  font-size: $fontsize
+  box-sizing: border-box
 
-h3
-  font-size: 1.5em
-  font-weight: 900 
+table 
+  border-collapse: collapse
+  border-spacing: 0
 
-h4
-  font-size: 1.2em
+textarea, pre, code
+  margin: 0
+  padding: 0
+  border: 0
+  font-size: $fontsize
+  font-family: monospace
+  vertical-align: baseline
+
+a, button
+  border: none
+  background: none
+  overflow: hidden
+  color: $fg
+  padding: 0px
+  text-decoration: none
+  color: $fg
+  cursor: pointer
+  &:hover
+    color: $mangool
+    svg
+      fill: $mangool
+
+  svg
+    fill: $fg
+
+h1, h2, h3, h4, h5, h6
   font-weight: bold
 
 h5
-  font-size: 1.1em
-  font-weight: bold 
+  font-size: $fontsize + 1
 
-h6
-  font-size: 1em
-  font-weight: bold
+h4
+  font-size: $fontsize + 2
 
-html, body
-  height: 100%
-  min-height: 100%    
-  box-sizing: border-box
+h3
+  font-size: $fontsize + 3
 
-*, *:before, *:after
-  box-sizing: inherit
+h2
+  font-size: $fontsize + 4
 
+h1
+  font-size: $fontsize + 20
+
+/* Scroll Bars */
+::-webkit-scrollbar
+  width: $scrollbar-width
+  height: $scrollbar-width
+  cursor: pointer
+
+::-webkit-scrollbar-corner
+  background: $bg-dark
+
+::-webkit-scrollbar-track
+  background: $bg-verydark
+  border-radius: $scrollbar-radius
+ 
+/* Handle */
+::-webkit-scrollbar-thumb
+  background: $jingool
+  border-radius: $scrollbar-radius
+
+::-webkit-scrollbar-thumb:hover 
+  background: $mangool
+  cursor: pointer

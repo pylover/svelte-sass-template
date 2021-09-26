@@ -1,8 +1,10 @@
 /node_modules/
-/public/build/
+/public/build
 
 .DS_Store
 
 .*.sw[op]
 `
 .ropeproject
+
+package-lock.json

@@ -1,132 +1,123 @@
+<svelte:window on:popstate={e => softNavigate(e.state.target)} />
+<Icons />
+
+<!-- Initialization Overlay -->
+{#if loading}
+  <div class="loading all10">
+    <p>Loading, please wait ... </p>
+  </div>
+{/if}
+
+<!-- Navbar -->
+<nav>
+  <Logo {title}/>
+  <NavItem bind:current title="Home"     target="/" />
+  <NavItem bind:current title="Kitchen"  target="/kitchen"/>
+</nav>
+  
+<div class="content">
+  <!-- Content -->
+  <svelte:component  
+  this={route.component}
+  bind:loading
+  />
+
+  <div class="all10 footer">
+    <p>{ title } © 2021</p>
+  </div>
+
+</div>
 <script>
-import Icons from './Icons.svelte';
-import Home from './Index.svelte';
-import Wifi from './Wifi.svelte';
-import Button from './Button.svelte';
+import { setContext } from 'svelte';
+import Icons from './components/Icons.svelte';
+import NavItem from './components/NavItem.svelte';
+import Logo from './components/Logo.svelte';
+import Home from './Home.svelte';
+import Kitchen from './Kitchen.svelte';
+import NotFound from './NotFound.svelte';
 
+const routes = {
+  '/':           {title: 'Home',       component: Home      },
+  '/kitchen':    {title: 'Kitchen',    component: Kitchen   },
+};
+
+const notFound = {
+  title: 'Not Found',
+  component: NotFound,
+};
+
+let loading = true;
+let route;
+let current;
 export let title;
-const routes = [
-    { title: 'Home', component: Home, path: '/',     icon: 'home'       },
-    { title: 'Wifi', component: Wifi, path: '/wifi', icon: 'connection' },
-];
 
-let selectedIndex = routes.findIndex(e => e.path == window.location.pathname)
-let selected = routes[selectedIndex];
-let menu = false;
+/* Navigation */
+function softNavigate(target) {
+  current = target;
+  route = routes[target];
 
-function changeComponent(event) {
-  let i = event.srcElement.id;
-  selected = routes[i];
-  selectedIndex = i;
-  window.history.pushState({}, 
-    selected.title, 
-    `${window.location.origin}${selected.path}`
+  /* 404 */
+  if (route == undefined) {
+    route = notFound;
+  }
+
+  /* Set the page title */
+  document.title = title;
+  return false;
+}
+
+
+function navigate(target) {
+  softNavigate(target);
+  window.history.pushState({
+    target
+  }, 
+    route.title, 
+    `${window.location.origin}basePath${target}`
   );
-  menu = false;
 }
+setContext('nav', {navigate});
 
-function closeMenu(event) {
-  menu = false;
-}
+/* Match current route */
+current = window.location.pathname.replace(new RegExp('^basePath'), '');
+navigate(current);
 
-function toggleMenu(event) {
-  console.log('toggle', menu);
-  menu = !menu;
-  console.log('toggle', menu);
-}
 </script>
 
-<style type="text/sass" global>
-@import 'styles/global.sass'
+<style lang="sass" type="text/sass" global>
+body
+  height: 100%
+  color: $fg
+  background-color: $bg-light
 
-.nav-item
+.content
+  width: 100%
+  height: calc(100% - #{$navheight})
+  overflow-y: auto
+
+nav
+  background-color: $bg-dark
+  width: 100%
   display: block
-  float: left
-  padding: $gutter
-  margin-bottom: $gutter 
-  *
-    pointer-events: none
-  h5
-    line-height: $nav-icon-size
-    vertical-align: middle
-    padding-left: $gutter
-  svg 
-    display: block
-    height: $nav-icon-size
-
-h1, h2
-  line-height: 28px
-  vertical-align: middle
-  float: left
-
-.header
-  margin-bottom: $gutter
-
-#contentHeader button
-  margin-right: $gutter * 2
-
-#leftBar
-  display: none
-
-@media (max-width: 768px)
-  #leftBar
-    display: none
-    z-index: 50
-    height: 100%
-    position: fixed
-    top: 0px
-    buttom: 0px
-    left: 0px
-
-@media (min-width: 768px)
-  #leftBar
-    display: block
-    border-right: 0px !important
-
-#closeButton
+  height: $navheight
+  border-style: inset
+  border-bottom: 1px solid $bg-light
+  padding-right: $gutter
+  padding-left: $gutter
+  
+.loading
   position: absolute
-  right: $gutter * 2
-  bottom: $gutter * 2
+  top: $navheight
+  left: 0px
+  width: 100%
+  height: calc(100% - #{$navheight + $gutter})
+  z-index: 80
+  background: #000000
+  text-align: center
+  padding-top: $navheight * 3
+  font-size: 2em
+
+.footer p
+  float: right
+  font-size: 0.8em
 </style>
-
-
-<Icons />
-<!-- Left Bar -->
-<div id="leftBar" 
-     class="xg2 lg2 md3 sm6"
-     style={menu? 'display: block !important': ''} >
-
-  <!-- Main Title -->
-  <div class="all10 p3 header logo">
-    <h1>{title}</h1>
-  </div>
-
-  <!-- App navigation -->
-  <nav class="all10 p3">
-    {#each routes as n, i}
-      <a title={n.title} id={i} 
-         href={n.path}
-         class={selectedIndex==i ? 'nav-item active' : 'nav-item'} 
-         on:click={changeComponent}>
-        <svg class="all2"><use xlink:href={"#icon-" + n.icon}></use></svg>
-        <h5 class="all8">{n.title}</h5>
-      </a>
-    {/each}
-  </nav>
-  <div class="sm7"></div>
-  <Button id="closeButton" icon="arrow-left" cls="mobile sm2" 
-      on:click={closeMenu} />
-</div>
-
-<!-- Content -->
-<div class="xg6 lg7 md7">
-  <div id="contentHeader" class="all10 p3 header">
-    <Button icon="menu" cls="mobile" on:click={toggleMenu} />
-    <h2>{selected.title}</h2>
-  </div>
-  <div id="content" class="all10 p3">
-    <!-- this is where our main content is placed -->
-    <svelte:component this={selected.component}/>
-  </div>
-</div>
-

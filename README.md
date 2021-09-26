@@ -1,20 +1,28 @@
-# svelte sass app
+# Svelete Sass Template
 
-This is a project template for [Svelte](https://svelte.dev) apps. It lives 
-at https://github.com/pylover/svelte-sass-template.
+## Contribution
 
-## Get started
+### Get started
 
-Install the dependencies...
+Install the dependencies.
+
+You need the `nodejs`, `python3` and `pip3` to install the 
+[yhttp](https://github.com/yhttp/yhttp) which required by the ``server.py``.
+
 
 ```bash
 make env
 ```
 
-...then start [Rollup](https://rollupjs.org):
+...then start the development server.
 
 ```bash
+make lint
 make serve
 ```
 
+## Contribution rules
 
+- Lint before commit
+- Maximum line width: 79 characters.
+- Single qoute for string literals: `'` (`'foo'`)

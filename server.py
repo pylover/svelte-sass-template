@@ -1,14 +1,13 @@
 #! /usr/bin/env python3
-import sys
-
-from yhttp import Application, text
+from yhttp import Application, json, validate, statuses
 
 
 app = Application()
+app.settings.debug = False
+
 app.staticdirectory('/', 'public', default=True, fallback=True)
 app.ready()
 try:
-    app.climain(['s'])
+    app.climain(['serve', '-b0.0.0.0:8080'])
 except OSError:
     print('The port is alredy taken.')
-    pass

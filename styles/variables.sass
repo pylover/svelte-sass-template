@@ -1,35 +1,47 @@
 /* Colors */
-$bg: #2d2d2d
-$content-bg: #393939
-$forecolor: #e7e8eb
-$jingool: #f48224
+$bg-verydark: #080808
+$bg-dark: #0d1117 
+$bg-light: #161b22
+$fg: #c9d1d9
+$border-color: $bg-verydark
+$jingool: #4c4359
 $mangool: #5a9e70
+$logo-color: #cc0000
 
-$button-bg: $bg
-$nav-hover-bg: $content-bg
-$content-border: 1px solid #404345
+$border-focus-color: #fdfdfd
 
-/* Grid */
-$gutter: 8px
+/* Syntax Highlighting */
+$hl-keyword: #1e90ff
+$hl-comment: #008b8b 
+$hl-attr: #4682b4
+$hl-op: #ff69b4
+$hl-text: $fg
+$hl-module: #e9967a
+$hl-return: #a9a9a9
 
-$devices:                     ("sm": (   0px,  768px, 15px))
-$devices: map-merge($devices, ("md": ( 768px, 1024px, 14px)))
-$devices: map-merge($devices, ("lg": (1024px, 1200px, 13px)))
-$devices: map-merge($devices, ("xg": (1200px, 4096px, 13px)))
-$colshadow: none
-//$colshadow: inset 0 0 1px #0f0; 
+/* Debug */
+$debug: inset 0 0 1px #0f0; 
 
 /* Font */
-$font: Helvetica
+$font: Helvetica, Arial, Verdana
+$fontsize: 18px
+$lineheight: 26px
 
 /* Nav */
-$nav-icon-size: 28px
+$navheight: 100px
 
-@mixin grayscale
-  -webkit-filter: grayscale(100%)
-  filter: grayscale(100%)
+/* Gutter */
+$gutter: 16px
 
-@mixin nofilter
-  -webkit-filter: none
-  filter: none
+/* Grid */
+$devices:                     ("sm": (   0px,  768px))
+$devices: map-merge($devices, ("md": ( 768px, 1024px)))
+$devices: map-merge($devices, ("lg": (1024px, 1200px)))
+$devices: map-merge($devices, ("xg": (1200px, 4096px)))
 
+/* Scroll Bars */
+$scrollbar-width: $gutter
+$scrollbar-radius: 5px
+
+/* Toolbar */
+$toolheight: 28px

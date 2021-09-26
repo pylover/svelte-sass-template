@@ -1,3 +1,8 @@
+@import 'variables'
+
+$colshadow: none
+//$colshadow: inset 0 0 1px #0f0; 
+
 .row 
   position: relative
   &::after
@@ -11,12 +16,10 @@
   box-shadow: $colshadow  
   overflow: hidden
   min-height: $gutter
+  padding: $gutter
 
 @each $name, $size in $devices
   @media (min-width: nth($size, 1)) and (max-width: nth($size, 2))
-    html
-      font-size: nth($size, 3)
-
     .#{$name}0
       display: none !important
 
@@ -27,12 +30,6 @@
     .#{$name}33p
       @include column
       width: 33.33%
-
-    .mobile
-      @if nth($size, 1) == 0
-        display: block
-      @else
-        display: none !important 
 
     @for $i from 1 through 10
       .#{$name}#{$i} 
@@ -53,5 +50,5 @@
     @include column
     width: 33.33%
 
-  .p#{$i}
+  .pad#{$i}
     padding: $gutter * $i
